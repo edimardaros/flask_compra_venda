@@ -5,7 +5,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     usuario = db.Column(db.String(length=30), nullable=False, unique=True)
     email = db.Column(db.String(length=50), nullable=False, unique=True)
-    senha = db.Column(db.String(), nullable=False, unique=True)
+    senha = db.Column(db.String(), nullable=False)
     valor = db.Column(db.Integer, nullable=False, default=5000)
     itens = db.relationship('Item', backref='dono_user', lazy=True)
 
