@@ -13,6 +13,9 @@
       Por favor, crie a sua conta
     </h1>
     <form action="" method="POST" class="form-register" style="color: whitesmoke;">
+
+      {{ form.hidden_tag() }}
+
       {{form.usuario.label()}}
       {{form.usuario(class="form-control", placeholder="Informe o UserName")}}
       
