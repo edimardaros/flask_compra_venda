@@ -27,6 +27,6 @@ def page_cadastro():
         return redirect(url_for('page_produto'))
     if form.errors != {}:
         for err in form.errors.values():
-            flash(f"Erro ao cadastrar usuário {err}")
+            flash(f"Erro ao cadastrar usuário {err}", category="danger")
 
     return render_template("cadastro.html", form=form)
