@@ -25,5 +25,8 @@ def page_cadastro():
         db.session.add(usuario)
         db.session.commit()
         return redirect(url_for('page_produto'))
+    if form.errors != {}:
+        for err in form.errors.values():
+            print(f"Erro ao cadastrar usuário {err}")
 
     return render_template("cadastro.html", form=form)
