@@ -13,23 +13,29 @@ def page_home():
 @login_required
 def page_produto():
     compra_form = CompraProdutoForm()
-    if compra_form.validate_on_submit():
-        # print(compra_form.__dict__)
-        # print(compra_form['submit'])
-        # print(request.form.get('compra_produto'))
-        if request.method == "POST":
-            compra_produto = request.form.get('compra_produto')
-            produto_obj = Item.query.filter_by(nome=compra_produto).first()
-            # print(produto_obj)
-            # print(compra_produto)
-            if produto_obj:
+    # if compra_form.validate_on_submit():
+    print(compra_form.__dict__)
+    # print(compra_form['submit'])
+    # print(request.form.get('compra_produto'))
+    if request.method == "POST":
+        compra_produto = request.form.get('compra_produto')
+        produto_obj = Item.query.filter_by(nome=compra_produto).first()
+        # print(produto_obj)
+        # print(compra_produto)
+        if produto_obj:
+            if current_user.compra_disponivel(produto_obj):
                 produto_obj.dono = current_user.id
                 current_user.valor -= produto_obj.preco
                 db.session.commit()
                 flash(f"Parabéns! Você comprou o produto {produto_obj.nome}", category="success")
-            return redirect(url_for('page_produto'))
-    itens = Item.query.all()
-    return render_template("produtos.html", itens=itens, compra_form=compra_form)
+            else:
+                flash(f"Você não possui saldo suficiente para comprar o produto {produto_obj.nome}", category="danger")
+        return redirect(url_for('page_produto'))
+    
+    if request.method == "GET":
+        # itens = Item.query.all()
+        itens = Item.query.filter_by(dono=None)
+        return render_template("produtos.html", itens=itens, compra_form=compra_form)
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def page_cadastro():
