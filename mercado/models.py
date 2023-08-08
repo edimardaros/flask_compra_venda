@@ -1,5 +1,5 @@
 from mercado import db
-
+from mercado import bcrypt
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -8,6 +8,14 @@ class User(db.Model):
     senha = db.Column(db.String(), nullable=False)
     valor = db.Column(db.Integer, nullable=False, default=5000)
     itens = db.relationship('Item', backref='dono_user', lazy=True)
+
+    @property
+    def senhacrip(self):
+        return self.senhacrip
+    
+    @senhacrip.setter
+    def senhacrip(self, senha_texto):
+        self.senha = bcrypt.generate_password_hash(senha_texto).decode('utf-8')
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True) #auto incremento
