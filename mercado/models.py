@@ -47,3 +47,8 @@ class Item(db.Model):
     # Definir o que retornar quando chamar Item.query.all()
     def __repr__(self):
         return f"Item {self.nome}"
+    
+    def compra(self, usuario):
+        self.dono = usuario.id
+        usuario.valor -= self.preco
+        db.session.commit()

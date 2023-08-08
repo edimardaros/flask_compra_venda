@@ -24,9 +24,7 @@ def page_produto():
         # print(compra_produto)
         if produto_obj:
             if current_user.compra_disponivel(produto_obj):
-                produto_obj.dono = current_user.id
-                current_user.valor -= produto_obj.preco
-                db.session.commit()
+                produto_obj.compra(current_user)
                 flash(f"Parabéns! Você comprou o produto {produto_obj.nome}", category="success")
             else:
                 flash(f"Você não possui saldo suficiente para comprar o produto {produto_obj.nome}", category="danger")
