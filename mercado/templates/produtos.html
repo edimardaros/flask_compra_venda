@@ -44,6 +44,7 @@
     <hr>
     <div class="row">
     {% for dono_item in dono_itens %}
+    {% include 'includes/modal_dono_produtos.html' %}
         <div class="col-md-6">
             <div class="card text-center bg-dark" style="width: 18rem;">
                 <div class="card-body">
@@ -51,7 +52,7 @@
                   <button
                     style="margin-bottom: 10px; margin-top: 10px;"
                     data-bs-toggle="modal"
-                    data-bs-target="#"
+                    data-bs-target="#exampleModalVenda-{{ dono_item.id }}"
                     class="btn btn-outline-danger"
                     type="button"
                   >
