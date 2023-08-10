@@ -33,7 +33,8 @@ def page_produto():
     if request.method == "GET":
         # itens = Item.query.all()
         itens = Item.query.filter_by(dono=None)
-        return render_template("produtos.html", itens=itens, compra_form=compra_form)
+        dono_itens = Item.query.filter_by(dono=current_user.id)
+        return render_template("produtos.html", itens=itens, compra_form=compra_form, dono_itens=dono_itens)
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def page_cadastro():
